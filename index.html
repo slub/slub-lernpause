@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote PWA</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        #quote {
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="title">Loading...</h1>
+    <p id="description"></p>
+
+    <script>
+        async function fetchAndDisplayRandomQuote() {
+            try {
+                const response = await fetch('data.csv');
+                const csvText = await response.text();
+                const rows = csvText.trim().split('\n').slice(1).map(row => row.split(','));
+                const randomRow = rows[Math.floor(Math.random() * rows.length)];
+
+                document.getElementById('title').textContent = randomRow[0];
+                document.getElementById('description').textContent = randomRow[1];
+            } catch (error) {
+                document.getElementById('title').textContent = 'Error loading data';
+                console.error('Error fetching or parsing CSV:', error);
+            }
+        }
+
+        fetchAndDisplayRandomQuote();
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').then(() => {
+                console.log('Service Worker Registered');
+            });
+        }
+    </script>
+
+</body>
+
+</html>
