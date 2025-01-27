@@ -6,29 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Quote PWA</title>
     <link rel="manifest" href="manifest.json">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f9;
-        }
-
-        #quote {
-            margin: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1 id="title">Loading...</h1>
-    <p id="description"></p>
+    <img src="logo.jpg" alt="SLUB Logo" class="top-left-image">
+    <div id="lernpause">
+        <h1 id="title">
+            Loading<span id="loading-dots"></span>
+        </h1>
+        <p id="description"></p>
+    </div>
+
+    <button id="new-row-button" style="display:none;">Nächste Lernpause?</button>
+
 
     <script>
         async function fetchGoogleSheetData() {
@@ -38,28 +29,45 @@
                 const response = await fetch(url);
                 const text = await response.text();
                 const json = JSON.parse(text.substring(47, text.length - 2)); // Trim the JSONP wrapper
-                const rows = json.table.rows.map(row => row.c.map(cell => cell?.v || ''));
+                rows = json.table.rows.map(row => row.c.map(cell => cell?.v || ''));
 
-                console.log(rows); // Each row will now have rich formatting
+                console.log(rows); // Debugging: Log all rows
 
-                // Display a random row
-                const randomRow = rows[Math.floor(Math.random() * rows.length)];
-                document.getElementById('title').textContent = randomRow[0];
-                document.getElementById('description').innerHTML = randomRow[1]; // Use innerHTML for links
+                // Display the first random row
+                selectRandomRow();
+
+                // Show the button to display another row
+                document.getElementById('new-row-button').style.display = 'block';
             } catch (error) {
+                document.getElementById('title').textContent = 'Error loading data';
                 console.error('Error fetching or parsing Google Sheet data:', error);
+            } finally {
+                // Stop the loading dots animation
+                clearInterval(dotsInterval);
+                loadingDots.textContent = '';
             }
         }
 
+        // Select and display a random row
+        function selectRandomRow() {
+            if (rows.length === 0) {
+                document.getElementById('title').textContent = 'No data available';
+                document.getElementById('description').textContent = '';
+                return;
+            }
+
+            const randomRow = rows[Math.floor(Math.random() * rows.length)];
+            document.getElementById('title').textContent = randomRow[0];
+            document.getElementById('description').innerHTML = randomRow[1]; // Use innerHTML for links
+        }
+
+        // Attach event listener to the button
+        document.getElementById('new-row-button').addEventListener('click', selectRandomRow);
+
+        // Fetch data when the page loads
         fetchGoogleSheetData();
     </script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js').then(() => {
-                console.log('Service Worker Registered');
-            });
-        }
-    </script>
+
 
 </body>
 
