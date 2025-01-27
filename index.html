@@ -22,6 +22,8 @@
 
 
     <script>
+        let previous_row = -1
+
         async function fetchGoogleSheetData() {
             const url = 'https://docs.google.com/spreadsheets/d/1_HKt_DSxewR-XaneTc88o6v3yyGV23sqKOFXHDCGz6Q/gviz/tq?tqx=out:json';
 
@@ -55,10 +57,15 @@
                 document.getElementById('description').textContent = '';
                 return;
             }
+            let selected_row = rows[Math.floor(Math.random() * rows.length)];
+            while (selected_row == previous_row) {
+                selected_row = rows[Math.floor(Math.random() * rows.length)];
+            }
+            previous_row = selected_row
 
-            const randomRow = rows[Math.floor(Math.random() * rows.length)];
-            document.getElementById('title').textContent = randomRow[0];
-            document.getElementById('description').innerHTML = randomRow[1]; // Use innerHTML for links
+            document.getElementById('title').textContent = selected_row[0];
+            document.getElementById('description').innerHTML = selected_row[1]; // Use innerHTML for links
+
         }
 
         // Attach event listener to the button
