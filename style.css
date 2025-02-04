@@ -21,10 +21,12 @@ body {
     height: 50px;
 }
 
+/* Main Container */
 #lernpause {
     background-color: rgba(255, 255, 255);
     color: rgb(32, 32, 32);
-    padding: 10%;
+    padding: 2em;
+    /* Reduced padding to save space */
     border-radius: 10px;
 
     width: 50%;
@@ -36,30 +38,59 @@ body {
 
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     text-align: center;
-    overflow: auto;
+    overflow: hidden;
+    /* Prevent content from overflowing the box */
     position: relative;
 }
 
-#title {
-    font-size: 1.8em;
-    margin: 0.5em 0;
-
+#lernpause-head {
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Ensures it spans the entire width */
+    background-color: white;
+    padding: 12pt 0pt;
+    /* Optional: Adds a subtle shadow */
+    z-index: 1;
 }
 
-#description {
-    font-size: 1.2em;
-    margin: 0.5em 0;
-}
-
+/* Category: Fixed position within lernpause */
 #category {
     position: absolute;
-    top: 1em;
-    left: 3em;
+    top: 0;
+    left: 1em;
+    /* Space from the left */
     color: #dd0000;
     font-weight: bold;
+    font-size: 12pt;
+    padding: 10px 0;
+    /* Padding for spacing */
+}
+
+/* Scrollable Content */
+#lernpause-body {
+    width: 100%;
+    flex-grow: 1;
+    /* Allows it to take remaining space */
+    overflow-y: auto;
+    /* Enables scrolling when text is too long */
+    padding-top: 2em;
+    /* Pushes content down to avoid overlap with category */
+}
+
+/* Title inside scrollable area */
+#title {
+    font-size: 20pt;
+    margin: 0.5em 0;
+    margin-top: 32pt;
+}
+
+/* Description inside scrollable area */
+#description {
+    font-size: 12pt;
 }
 
 #next-tip-button {
