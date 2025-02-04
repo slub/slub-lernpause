@@ -40,11 +40,13 @@ body {
     align-items: center;
     text-align: center;
     overflow: auto;
+    position: relative;
 }
 
 #title {
     font-size: 1.8em;
     margin: 0.5em 0;
+
 }
 
 #description {
@@ -52,7 +54,15 @@ body {
     margin: 0.5em 0;
 }
 
-#new-row-button {
+#category {
+    position: absolute;
+    top: 1em;
+    left: 3em;
+    color: #dd0000;
+    font-weight: bold;
+}
+
+#next-tip-button {
     position: fixed;
     bottom: 20px;
     left: 50%;
@@ -68,10 +78,10 @@ body {
     transition: background-color 0.3s;
 }
 
-#new-row-button:hover {
+#next-tip-button:hover {
     background-color: #aa0000;
 }
 
-#new-row-button:active {
+#next-tip-button:active {
     background-color: #880000;
 }
