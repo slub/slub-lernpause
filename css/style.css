@@ -19,6 +19,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
+    font-size: 14pt;
 }
 
 .top-left-image {
@@ -59,7 +60,7 @@ body {
     width: 100%;
     /* Ensures it spans the entire width */
     background-color: white;
-    padding: 12pt 0pt;
+    padding: 14pt 0pt;
     /* Optional: Adds a subtle shadow */
     z-index: 1;
 }
@@ -72,7 +73,6 @@ body {
     /* Space from the left */
     color: #dd0000;
     font-weight: bold;
-    font-size: 12pt;
     padding: 10px 0;
     /* Padding for spacing */
 }
@@ -90,15 +90,13 @@ body {
 
 /* Title inside scrollable area */
 #title {
-    font-size: 20pt;
+    font-size: 24pt;
     margin: 0.5em 0;
     margin-top: 32pt;
 }
 
 /* Description inside scrollable area */
-#description {
-    font-size: 12pt;
-}
+#description {}
 
 #next-tip-button {
     position: fixed;
