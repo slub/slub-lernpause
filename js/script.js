@@ -59,9 +59,7 @@ function selectRandomRow() {
 
     // update category index
     current_category_index = (current_category_index + 1) % 3;
-    setTimeout(() => {
-        document.getElementById('next-tip-button').blur()
-    }, 100);
+    document.getElementById('next-tip-button').blur()
 
 }
 
@@ -97,9 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 writeContent(selected_row)
             })
             .catch(error => console.error("Error loading language file:", error));
-        setTimeout(() => {
-            document.getElementById('lang-switch-button').blur()
-        }, 100);
+        document.getElementById('lang-switch-button').blur()
     }
 
 
