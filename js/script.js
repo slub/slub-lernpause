@@ -12,7 +12,7 @@ async function fetchGoogleSheetData() {
         const json = JSON.parse(text.substring(47, text.length - 2));
         rows = json.table.rows.map(row => row.c.map(cell => cell?.v || ''));
 
-        console.log(rows);
+        // console.log(rows);
 
         // set an inital Category at random
         document.getElementById('category').textContent = order[Math.floor(Math.random() * 3)]
