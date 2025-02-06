@@ -10,9 +10,9 @@ async function fetchGoogleSheetData() {
         const response = await fetch(url);
         const text = await response.text();
         const json = JSON.parse(text.substring(47, text.length - 2));
-        rows = json.table.rows.map(row => row.c.map(cell => cell?.v || ''));
 
-        // console.log(rows);
+        // to prevent repetition, if a row was selected we set selected to true, when all rows are selected wee reset them to false 
+        rows = (json.table.rows.map(row => row.c.map(cell => cell?.v || ''))).map(row => row = { 'content': row, 'selected': false });
 
         // set an inital Category at random
         document.getElementById('category').textContent = order[Math.floor(Math.random() * 3)]
@@ -34,21 +34,33 @@ function selectRandomRow() {
     }
 
     // read last category from order variable and take the next one to the right
-    rows_subset = rows.filter((row) => row[2] == order[(order.indexOf(document.getElementById('category').textContent) + 1) % 3]);
+    let current_category = order[(order.indexOf(document.getElementById('category').textContent) + 1) % 3]
+    let rows_subset = rows.filter((row) => row.content[2] == current_category);
 
-    let selected_row = rows_subset[Math.floor(Math.random() * rows_subset.length)];
+    // select rows in this category that were not selected already
+    let not_selected_subset = rows_subset.filter((row) => row.selected == false)
 
+    // if all rows of current_category were selected, reset selection status 
+    if (not_selected_subset.length == 0) {
+        for (row of rows_subset) {
+            rows[rows.indexOf(row)].selected = false
+        }
+        not_selected_subset = rows_subset.filter((row) => row.selected == false)
+    }
+
+    let selected_row = not_selected_subset[Math.floor(Math.random() * not_selected_subset.length)];
+    rows[rows.indexOf(selected_row)].selected = true
 
 
 
     if (lang == 'en') {
-        document.getElementById('title').textContent = selected_row[0 + 3];
-        document.getElementById('description').innerHTML = selected_row[1 + 3];
-        document.getElementById('category').textContent = selected_row[2 + 3];
+        document.getElementById('title').textContent = selected_row.content[0 + 3];
+        document.getElementById('description').innerHTML = selected_row.content[1 + 3];
+        document.getElementById('category').textContent = selected_row.content[2 + 3];
     } else {
-        document.getElementById('title').textContent = selected_row[0];
-        document.getElementById('description').innerHTML = selected_row[1];
-        document.getElementById('category').textContent = selected_row[2];
+        document.getElementById('title').textContent = selected_row.content[0];
+        document.getElementById('description').innerHTML = selected_row.content[1];
+        document.getElementById('category').textContent = selected_row.content[2];
     }
 
 
