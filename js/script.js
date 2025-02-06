@@ -1,8 +1,5 @@
-let lang = 'de';
 const categories = ['Motivation', 'Stressreduktion', 'Bewegung'];
 let current_category_index = Math.floor(Math.random() * 3);
-
-
 
 async function fetchGoogleSheetData() {
     const url = 'https://docs.google.com/spreadsheets/d/1_HKt_DSxewR-XaneTc88o6v3yyGV23sqKOFXHDCGz6Q/gviz/tq?tqx=out:json';
@@ -17,31 +14,22 @@ async function fetchGoogleSheetData() {
         rows = (json.table.rows.map(row => row.c.map(cell => cell?.v || ''))).map(row => row = { 'content': row, 'weight': 0 });
 
         // set an inital Category at random
-        document.getElementById('category').textContent = current_category_index;
         selectRandomRow();
+        document.getElementById('next-tip-button').style.display = "block"
 
     } catch (error) {
-        document.getElementById('title').textContent = 'Error loading data';
+        document.getElementById('tip-title').textContent = 'Error loading data';
         console.error('Error fetching or parsing Google Sheet data:', error);
     }
 }
 
-function readDataFromFile() {
-    const json = JSON.parse('data/data.json');
-
-    // if a row was selected we increase the weight, to ensure that the same row gets not selected multiples time right after each other
-    rows = (json.table.rows.map(row => row.c.map(cell => cell?.v || ''))).map(row => row = { 'content': row, 'weight': 0 });
-
-    // set an inital Category at random
-    document.getElementById('category').textContent = current_category_index;
-    selectRandomRow();
-}
+function readDataFromFile() { };
 
 function selectRandomRow() {
     if (rows.length === 0) {
-        document.getElementById('title').textContent = 'No data available';
-        document.getElementById('description').textContent = '';
-        document.getElementById('category').textContent = '';
+        document.getElementById('tip-title').textContent = 'No data available';
+        document.getElementById('tip-description').textContent = '';
+        document.getElementById('tip-category').textContent = '';
         return;
     }
 
@@ -53,7 +41,7 @@ function selectRandomRow() {
     rows_subset = rows_subset.filter((row) => row.weight == min_weight);
 
     // select row from rows with lowest weight in this category at random
-    let selected_row = rows_subset[Math.floor(Math.random() * rows_subset.length)];
+    selected_row = rows_subset[Math.floor(Math.random() * rows_subset.length)];
 
     // if (categories[current_category_index] == 'Bewegung') { console.log(rows_subset.map(rows => rows.content[0])) };
 
@@ -71,21 +59,51 @@ function selectRandomRow() {
 
     // update category index
     current_category_index = (current_category_index + 1) % 3;
+    setTimeout(() => {
+        document.getElementById('next-tip-button').blur()
+    }, 100);
+
 }
 
 function writeContent(row) {
-    if (lang == 'en') {
-        document.getElementById('title').textContent = row.content[0 + 3];
-        document.getElementById('description').innerHTML = row.content[1 + 3];
-        document.getElementById('category').textContent = row.content[2 + 3];
+    if (document.getElementById('lang-switch-button').textContent == 'de') {
+        document.getElementById('tip-title').textContent = row.content[0 + 3];
+        document.getElementById('tip-description').innerHTML = row.content[1 + 3];
+        document.getElementById('tip-category').textContent = row.content[2 + 3];
     } else {
-        document.getElementById('title').textContent = row.content[0];
-        document.getElementById('description').innerHTML = row.content[1];
-        document.getElementById('category').textContent = row.content[2];
+        document.getElementById('tip-title').textContent = row.content[0];
+        document.getElementById('tip-description').innerHTML = row.content[1];
+        document.getElementById('tip-category').textContent = row.content[2];
     }
 }
 
 document.getElementById('next-tip-button').addEventListener('click', selectRandomRow);
 
+
 fetchGoogleSheetData();
 
+document.addEventListener("DOMContentLoaded", () => {
+    const langSwitcher = document.getElementById("lang-switch-button");
+
+    function loadLanguage() {
+        fetch(`lang/lang.json`)
+            .then(response => response.json())
+            .then(lang_data => {
+                lang = document.getElementById('lang-switch-button').textContent
+                document.getElementById("page-title").textContent = lang_data.page_title[lang]
+                document.getElementById("next-tip-button").textContent = lang_data.next_tip_button[lang]
+                document.getElementById("feedback-link").textContent = lang_data.feedback_link[lang]
+                document.getElementById("lang-switch-button").textContent = lang_data.lang_switch[lang]
+                writeContent(selected_row)
+            })
+            .catch(error => console.error("Error loading language file:", error));
+        setTimeout(() => {
+            document.getElementById('lang-switch-button').blur()
+        }, 100);
+    }
+
+
+
+    // Event listeners for switching language
+    langSwitcher.addEventListener("click", loadLanguage)
+});

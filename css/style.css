@@ -66,7 +66,7 @@ body {
 }
 
 /* Category: Fixed position within lernpause */
-#category {
+#tip-category {
     position: absolute;
     top: 0;
     left: 1em;
@@ -88,18 +88,39 @@ body {
 }
 
 /* Title inside scrollable area */
-#title {
+#tip-title {
     font-size: 20pt;
     margin: 0.5em 0;
     margin-top: 32pt;
 }
 
 /* Description inside scrollable area */
-#description {}
+#tip-description {}
+
+
+
+#lang-switch-button {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    padding: 5px 10px;
+    font-size: 12pt;
+    background-color: #00afc8;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+#lang-switch-button:focus {
+    background-color: #87cdd7;
+}
 
 #next-tip-button {
     position: fixed;
-    bottom: 20px;
+    bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
     padding: 10px 20px;
@@ -111,12 +132,15 @@ body {
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s;
+    display: none;
 }
 
-#next-tip-button:hover {
+#next-tip-button:focus {
     background-color: #aa0000;
 }
 
-#next-tip-button:active {
-    background-color: #880000;
+#feedback-link {
+    color: #00afc8;
+    position: fixed;
+    bottom: 20px;
 }
