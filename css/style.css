@@ -19,7 +19,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
-    font-size: 16pt;
+    font-size: 14pt;
 }
 
 #logo {
@@ -33,16 +33,12 @@ body {
 #lernpause {
     background-color: rgba(255, 255, 255);
     color: rgb(32, 32, 32);
-    padding: 2em;
+    padding: 1em;
     /* Reduced padding to save space */
     border-radius: 10px;
 
-    width: 50%;
-    height: 60%;
-    max-width: 800px;
-    max-height: 600px;
-    min-width: 300px;
-    min-height: 200px;
+    width: 80%;
+    height: 50%;
 
     display: flex;
     flex-direction: column;
@@ -120,11 +116,11 @@ body {
 
 #next-tip-button {
     position: fixed;
-    bottom: 80px;
+    bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
-    padding: 10px 20px;
-    font-size: 1em;
+    padding: 8px 16px;
+    font-size: 14pt;
     background-color: #dd0000;
     color: #fff;
     border: none;
