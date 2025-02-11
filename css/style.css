@@ -22,16 +22,28 @@ body {
     font-size: 14pt;
 }
 
+@media (min-aspect-ratio: 7/10) {
+    html {
+        padding-left: 15%;
+        padding-right: var(--dynamic-padding-right);
+        box-shadow: inset calc(-20vw) 0px 100px -100px rgb(255, 255, 255);
+    }
+}
+
+
 #logo {
     position: absolute;
-    top: 40px;
-    left: 40px;
+    top: 35px;
+    left: 35px;
+    /* padding plus box shadow creates whitespace around logo */
+    box-shadow: 0 0 3px 35px rgb(255, 255, 255);
     height: 50px;
 }
 
 /* Main Container */
 #lernpause {
-    background-color: rgba(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 3px 3px rgb(255, 255, 255);
     color: rgb(32, 32, 32);
     padding: 1em;
     /* Reduced padding to save space */
@@ -119,8 +131,7 @@ body {
 #next-tip-button {
     position: fixed;
     bottom: 60px;
-    padding: 8px 12px;
-    width: 50%;
+    padding: 8px 70px;
     font-size: 14pt;
     background-color: #dd0000;
     color: #fff;
@@ -137,7 +148,10 @@ body {
 }
 
 #feedback-link {
+    background-color: #fff;
+    font-weight: bold;
     color: #00afc8;
+    box-shadow: 0 0 3pt 3pt rgb(255, 255, 255);
     position: fixed;
-    bottom: 20px;
+    bottom: 17px;
 }
