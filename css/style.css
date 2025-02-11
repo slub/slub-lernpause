@@ -36,7 +36,7 @@ body {
     top: 40px;
     left: 40px;
     /* padding plus box shadow creates whitespace around logo */
-    box-shadow: 0 0 3px 40px rgb(255, 255, 255);
+    box-shadow: 0 0 3px 43px rgb(255, 255, 255);
     height: 50px;
     z-index: 10;
 }
@@ -173,7 +173,7 @@ body {
         top: 30px;
         left: 30px;
         /* padding plus box shadow creates whitespace around logo */
-        box-shadow: 0 0 3px 30px rgb(255, 255, 255);
+        box-shadow: 0 0 3px 33px rgb(255, 255, 255);
         height: 30px;
     }
 
