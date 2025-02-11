@@ -170,10 +170,10 @@ body {
 
     #logo {
         position: absolute;
-        top: 25px;
-        left: 25px;
+        top: 30px;
+        left: 30px;
         /* padding plus box shadow creates whitespace around logo */
-        box-shadow: 0 0 3px 25px rgb(255, 255, 255);
+        box-shadow: 0 0 3px 30px rgb(255, 255, 255);
         height: 30px;
     }
 
